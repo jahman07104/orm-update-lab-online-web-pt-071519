@@ -5,8 +5,6 @@ class Student
   attr_accessor :id, :name, :grade
 
 
-   # Remember, you can access your database connection anywhere in this class		  def initialize(id=nil, name, grade)
-  #  with DB[:conn]  		    @id, @name, @grade = id, name, grade
 
    end
 
