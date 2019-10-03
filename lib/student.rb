@@ -2,14 +2,13 @@ require_relative "../config/environment.rb"
 
 class Student
   
-  attr_accessor :id, :name, :grade
+   attr_accessor :id, :name, :grade
 
-	  def initialize(id=nil, name, grade)
+	def initialize(id=nil, name, grade)
 	    @id, @name, @grade = id, name, grade
+  end
 
-   end
-
-   def self.create_table
+  def self.create_table
     sql = <<-SQL 
       CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY,
@@ -20,11 +19,11 @@ class Student
     DB[:conn].execute(sql)
   end
 
-   def self.drop_table 
+  def self.drop_table 
     DB[:conn].execute("DROP TABLE IF EXISTS students")
   end
 
-   def save
+  def save
     if self.id
       self.update
     else
@@ -39,7 +38,7 @@ class Student
   end
 
 
- end		 
+ 		 
  
  def self.create(name:, grade:)
     student = Student.new(name, grade)
@@ -47,19 +46,19 @@ class Student
     student
   end
 
-   def self.new_from_db(row)
+ def self.new_from_db(row)
     id = row[0]
     name = row[1]
     grade = row[2]
     self.new(id, name, grade)
-  end 
+ end 
 
-   def self.find_by_name(name)
+ def self.find_by_name(name)
     sql = "SELECT * FROM students WHERE name = ?"
     DB[:conn].execute(sql, name).map { |row| new_from_db(row) }.first
   end
 
-   def update
+  def update
     sql = "UPDATE students SET name = ?, grade = ? WHERE id = ?"
     DB[:conn].execute(sql, self.name, self.grade, self.id)
   end
